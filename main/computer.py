@@ -1,12 +1,14 @@
+from .helpers import Helper, TIE
+
+helper = Helper()
+
 # Tic-Tac-Toe
 # Plays the game of tic-tac-toe against a human opponent
 
 # global constants
 X = "X"
 O = "O"
-EMPTY = " "
-TIE = "TIE"
-NUM_SQUARES = 9
+
 
 class Computer:
     def welcome_message(self):
@@ -50,94 +52,24 @@ class Computer:
                 exit()
 
 
-    def query_user(self, qtn):
-        """Ask a yes or no question."""
-        response = None
-        while response not in ("y", "n"):
-            response = input(qtn).lower()
-        return response
-
-
-    def get_input(self, question, min, max):
-        """Ask for a number within a range."""
-        response = None
-        while response not in range(min, max):
-            response = int(input(question))
-        return response
-
-
     def play_first(self):
         """Determine if player or computer goes first."""
-        go_first = self.query_user("Do you require the first move? (y/n): ")
-        if go_first == "y":
-            print("\nHuman takes the first move X")
-            human = X
-            computer = O
-        else:
-            print("\nComputer takes the first move X")
-            computer = X
-            human = O
-        return computer, human
+        go_first = helper.query_user("Do you require the first move? (y/n): ")
+        try:
+            if go_first == "y":
+                print("\nHuman takes the first move X")
+                human = X
+                computer = O
+            else:
+                print("\nComputer takes the first move X")
+                computer = X
+                human = O
+            return computer, human
+        except KeyboardInterrupt:
+            print("Goodbye!")
+            exit()
 
 
-    def new_board(self):
-        """Create new game board."""
-        board = []
-        for square in range(NUM_SQUARES):
-            board.append(EMPTY)
-        return board
-
-
-    def display_board(self, board):
-        """Display game board on screen."""
-        print("\n\t", board[0], "|", board[1], "|", board[2])
-        print("\t", "---------")
-        print("\t", board[3], "|", board[4], "|", board[5])
-        print("\t", "---------")
-        print("\t", board[6], "|", board[7], "|", board[8], "\n")
-
-
-    def legal_moves(self, board):
-        """Create list of legal moves."""
-        moves = []
-        for square in range(NUM_SQUARES):
-            if board[square] == EMPTY:
-                moves.append(square)
-        return moves
-
-
-    def winner(self, board):
-        """Determine the game winner."""
-        WAYS_TO_WIN = ((0, 1, 2),
-                    (3, 4, 5),
-                    (6, 7, 8),
-                    (0, 3, 6),
-                    (1, 4, 7),
-                    (2, 5, 8),
-                    (0, 4, 8),
-                    (2, 4, 6))
-
-        for row in WAYS_TO_WIN:
-            if board[row[0]] == board[row[1]] == board[row[2]] != EMPTY:
-                winner = board[row[0]]
-                return winner
-
-        if EMPTY not in board:
-            return TIE
-
-        return None
-
-
-    def human_move(self, board, human):
-        """Get human move."""  
-        legal = self.legal_moves(board)
-        move = None
-        while move not in legal:
-            move = self.get_input("Where will you move? (0 - 8):", 0, NUM_SQUARES)
-            if move not in legal:
-                print("\nThat square is already occupied. Please select another.\n")
-        print("Great move!...")
-        return move
 
 
     def computer_move(self, board, computer, human):
@@ -150,26 +82,26 @@ class Computer:
         print("I shall take square number", end=" ")
 
         # if computer can win, take that move
-        for move in self.legal_moves(board):
+        for move in helper.legal_moves(board):
             board[move] = computer
-            if self.winner(board) == computer:
+            if helper.winner(board) == computer:
                 print(move)
                 return move
             # done checking this move, undo it
-            board[move] = EMPTY
+            board[move] = " "
 
         # if human can win, block that move
-        for move in self.legal_moves(board):
+        for move in helper.legal_moves(board):
             board[move] = human
-            if self.winner(board) == human:
+            if helper.winner(board) == human:
                 print(move)
                 return move
             # done checkin this move, undo it
-            board[move] = EMPTY
+            board[move] =" "
 
         # since no one can win on next move, pick best open square
         for move in BEST_MOVES:
-            if move in self.legal_moves(board):
+            if move in helper.legal_moves(board):
                 print(move)
                 return move
 
@@ -202,18 +134,18 @@ class Computer:
     def play_game(self):  
         computer, human = self.play_first()
         turn = X
-        board = self.new_board()
-        self.display_board(board)
+        board = helper.new_board()
+        helper.display_board(board)
 
-        while not self.winner(board):
+        while not helper.winner(board):
             if turn == human:
-                move = self.human_move(board, human)
+                move = helper.human_move(board, human)
                 board[move] = human
             else:
                 move = self.computer_move(board, computer, human)
                 board[move] = computer
-            self.display_board(board)
+            helper.display_board(board)
             turn = self.next_turn(turn)
 
-        the_winner = self.winner(board)
+        the_winner = helper.winner(board)
         self.congrat_winner(the_winner, computer, human)
