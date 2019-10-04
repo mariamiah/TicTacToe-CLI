@@ -1,5 +1,5 @@
 # TicTacToe
-- Application to play the TicTacToe game
+- Application to play the TicTacToe game on the terminal
 
 ## Description
 - This is a paper and pencil game for 2 players, X and O who take turns marking the spaces in a 3x3 grid.
@@ -18,16 +18,11 @@
 - The application notifies of the winner, the draw or the loser
 
 ## Getting started
-#### Step 1(Install Python version 3)
-- Install Python3 on your local machine by following this [link](https://realpython.com/installing-python/)
+- Clone this repository by running `git clone https://github.com/mariamiah/TicTacToe-CLI.git`
+- Navigate into the repository folder by running `cd Tic-TacToe-CLI`
+- Set up a virtualenvironment `virtualenv venv -p python3`
+- Activate the virtual environment `source venv/bin/activate` for unix based systems and `source venv\Scripts\activate` for windows
+- Run `python main.py` to start the application
 
-#### Step 2(Set up and activate the virtual environment)
-- Set up a virtual environment in your project folder via your `terminal`. This will help you isolate dependencies for each project to avoid conflicting dependencies in different projects
-- Run `python3 -m venv venv`
-- In order to activate the virtual environment, run `. venv/bin/activate` for linux and macOS. For windows, run `. venv\Scripts\activate.bat`
-
-#### Step 3(Run the script)
-- Ensure you are working in your virtual environment `venv`
-- Run `python <filename>.py`
-- Follow the prompt on the commandline and run the game
-
+## Testing
+- To run tests locally type `py.test` on the terminal

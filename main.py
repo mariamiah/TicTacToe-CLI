@@ -7,6 +7,7 @@ first_player = 'X'
 turn = 1
 def human_computer():
     computer.play_game()
+    
 def human_human():
     print('\n\nWelcome to Tic Tac Toe for two humans!')
     human.print_board(initial=True)

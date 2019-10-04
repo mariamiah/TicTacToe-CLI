@@ -3,7 +3,7 @@ from .helpers import Helper, TIE
 helper = Helper()
 
 # Tic-Tac-Toe
-# Plays the game of tic-tac-toe against a human opponent
+# Plays the game of tic-tac-toe against the computer opponent
 
 # global constants
 X = "X"
@@ -73,7 +73,12 @@ class Computer:
 
 
     def computer_move(self, board, computer, human):
-        """Make computer move."""
+        """Define the moves made by the computer.
+            Keywords:
+            board -- the main board onto which values are added
+            computer -- the value player by the computer X or O
+            human   -- the value played by the human X or O
+        """
         # make a copy to work with since function will be changing list
         board = board[:]
         # the best positions to have, in order
@@ -107,7 +112,10 @@ class Computer:
 
 
     def next_turn(self, turn):
-        """Switch turns."""
+        """Switches between player turns for the computer and human.
+            Keywords:
+            turn -- represents the symbol currently being played X or O
+        """
         if turn == X:
             return O
         else:
@@ -115,7 +123,12 @@ class Computer:
 
 
     def congrat_winner(self, the_winner, computer, human):
-        """Congratulate the winner."""
+        """Displays a congratulatory message to the winner.
+            Keywords:
+            the_winner -- can be the computer, human or TIE
+            computer    -- value to check if the computer wins
+            human -- value to check if human wins
+        """
         if the_winner != TIE:
             print(the_winner, "won!\n")
         else:
@@ -149,3 +162,8 @@ class Computer:
 
         the_winner = helper.winner(board)
         self.congrat_winner(the_winner, computer, human)
+
+ 
+
+
+
